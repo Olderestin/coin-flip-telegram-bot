@@ -47,7 +47,7 @@ async def stats(update: Update, context: CallbackContext) -> None:
     stats = cursor.fetchone()
     conn.close()
 
-    if stats:
+    if stats[0] > 0:
         flips_count, heads_count, tails_count = stats
 
         heads_percentage = heads_count * 100 / flips_count if flips_count > 0 else 0
@@ -62,7 +62,7 @@ async def stats(update: Update, context: CallbackContext) -> None:
 
         await update.message.reply_text(text)
     else:
-        await update.message.reply_text('Вы еще не подбрасывали монетку. Используйте /flip.')
+        await update.message.reply_text('Вы еще не подбрасывали монетку. Используйте Flip.')
 
 async def about(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text('Этот бот был создан в качестве тестового задания.\nОн выполняет функции подбрасывания монеты и запись статистики подбрасываний для каждого отдельного пользователя.')

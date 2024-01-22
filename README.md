@@ -75,7 +75,7 @@ ___
 ___
 ## Note:
 
-- sqlite3 database is used to save usage statistics
+- sqlite3 database is used to save usage statistics. Database folder `src/storage` 
 
 
 

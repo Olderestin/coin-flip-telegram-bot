@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  my_project:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: telegram_bot
+    volumes:
+    - ~/storage:/code/storage

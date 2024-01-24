@@ -4,3 +4,4 @@ __pycache__
 *.pyc
 .vscode
 coin_flip_bot.db
+app.log

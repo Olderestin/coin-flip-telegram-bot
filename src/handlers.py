@@ -1,3 +1,4 @@
+from loguru import logger
 import random
 from telegram import ReplyKeyboardMarkup, Update
 from telegram.ext import CallbackContext
@@ -19,7 +20,7 @@ async def start(update: Update, context: CallbackContext) -> None:
     conn.commit()
     conn.close()
 
-    
+    logger.info(f"Create a new user, his id: {user_id}")
     await update.message.reply_text("Привет! Теперь вы можете использовать команды flip и stats.", reply_markup=markup)
 
 async def flip(update: Update, context: CallbackContext) -> None:
@@ -37,6 +38,8 @@ async def flip(update: Update, context: CallbackContext) -> None:
     
     conn.commit()
     conn.close()
+
+    logger.info(f"User {user_id} make a flip with result: {result}")
     await update.message.reply_text(f'Результат подбрасывания монетки: {result}')
 
 async def stats(update: Update, context: CallbackContext) -> None:
@@ -60,9 +63,12 @@ async def stats(update: Update, context: CallbackContext) -> None:
             f'Решек (tails): {tails_count} ({tails_percentage}%)'
         )
 
+        logger.info(f"User {update.effective_user.id} used «Stats» handler.")
         await update.message.reply_text(text)
     else:
         await update.message.reply_text('Вы еще не подбрасывали монетку. Используйте Flip.')
 
 async def about(update: Update, context: CallbackContext) -> None:
+    
+    logger.info(f"User {update.effective_user.id} used «About» handler.")
     await update.message.reply_text('Этот бот был создан в качестве тестового задания.\nОн выполняет функции подбрасывания монеты и запись статистики подбрасываний для каждого отдельного пользователя.')

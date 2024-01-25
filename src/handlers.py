@@ -10,7 +10,7 @@ reply_keyboard = [
     ["About"],
 ]
 
-markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=False, resize_keyboard=True)
+MARKUP = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=False, resize_keyboard=True)
 
 async def start(update: Update, context: CallbackContext) -> None:
     user_id = update.effective_user.id
@@ -21,7 +21,7 @@ async def start(update: Update, context: CallbackContext) -> None:
     conn.close()
 
     logger.info(f"Create a new user, his id: {user_id}")
-    await update.message.reply_text("Привет! Теперь вы можете использовать команды flip и stats.", reply_markup=markup)
+    await update.message.reply_text("Привет! Теперь вы можете использовать команды flip и stats.", reply_markup=MARKUP)
 
 async def flip(update: Update, context: CallbackContext) -> None:
     user_id = update.effective_user.id

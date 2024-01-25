@@ -3,7 +3,7 @@ import random
 from telegram import ReplyKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 
-from database import create_connection
+from models import UserDatabase
 
 reply_keyboard = [
     ["Flip", "Stats"],
@@ -14,41 +14,27 @@ MARKUP = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=False, resize_key
 
 async def start(update: Update, context: CallbackContext) -> None:
     user_id = update.effective_user.id
-    conn = create_connection()
-    cursor = conn.cursor()
-    cursor.execute('INSERT OR IGNORE INTO user (user_id) VALUES (?)', (user_id,))
-    conn.commit()
-    conn.close()
+    
+    with UserDatabase() as user_db:
+        user_db.add_user(user_id)
 
     logger.info(f"Create a new user, his id: {user_id}")
     await update.message.reply_text("Привет! Теперь вы можете использовать команды flip и stats.", reply_markup=MARKUP)
 
 async def flip(update: Update, context: CallbackContext) -> None:
     user_id = update.effective_user.id
-    conn = create_connection()
-    cursor = conn.cursor()
-    cursor.execute('UPDATE user SET flips_count = flips_count + 1 WHERE user_id = ?', (user_id,))
     
-    result = 'heads' if random.randint(0, 1) == 0 else 'tails'
-    
-    if result == 'heads':
-        cursor.execute('UPDATE user SET heads_count = heads_count + 1 WHERE user_id = ?', (user_id,))
-    else:
-        cursor.execute('UPDATE user SET tails_count = tails_count + 1 WHERE user_id = ?', (user_id,))
-    
-    conn.commit()
-    conn.close()
+    with UserDatabase() as user_db:
+        result = user_db.make_flip(user_id)
 
     logger.info(f"User {user_id} make a flip with result: {result}")
     await update.message.reply_text(f'Результат подбрасывания монетки: {result}')
 
 async def stats(update: Update, context: CallbackContext) -> None:
     user_id = update.effective_user.id
-    conn = create_connection()
-    cursor = conn.cursor()
-    cursor.execute('SELECT flips_count, heads_count, tails_count FROM user WHERE user_id = ?', (user_id,))
-    stats = cursor.fetchone()
-    conn.close()
+    
+    with UserDatabase() as user_db:
+        stats = user_db.get_stats(user_id)
 
     if stats[0] > 0:
         flips_count, heads_count, tails_count = stats

@@ -3,12 +3,14 @@ from telegram.ext import CommandHandler, ApplicationBuilder, MessageHandler, fil
 
 from handlers import start, flip, stats, about
 from config import BOT_TOKEN
-from models import create_user_table
+from models import UserDatabase
 
 logger.add("app.log", rotation="500 MB", level="TRACE")
 
 def main() -> None:
-    create_user_table()
+    
+    with UserDatabase() as user_db:
+        user_db.create_user_table()
 
     application = ApplicationBuilder().token(BOT_TOKEN).build()
 

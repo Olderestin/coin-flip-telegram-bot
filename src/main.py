@@ -2,7 +2,7 @@ from loguru import logger
 from telegram.ext import CommandHandler, ApplicationBuilder, MessageHandler, filters
 
 from handlers import start, flip, stats, about
-from config import BOT_TOKEN
+from config import settings
 from models import UserDatabase
 
 logger.add("app.log", rotation="500 MB", level="TRACE")
@@ -12,7 +12,7 @@ def main() -> None:
     with UserDatabase() as user_db:
         user_db.create_user_table()
 
-    application = ApplicationBuilder().token(BOT_TOKEN).build()
+    application = ApplicationBuilder().token(settings.BOT_TOKEN).build()
 
     logger.info("Start the app")
 

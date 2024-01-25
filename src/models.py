@@ -1,10 +1,12 @@
 import random
 import sqlite3
+from pathlib import Path
 
-from config import DATABASE_URL
+from config import settings
+
 
 class UserDatabase():
-    def __init__(self, db_path: str = DATABASE_URL):
+    def __init__(self, db_path: Path = settings.DATABASE_URL):
         self.db_path = db_path
 
     def __enter__(self):

@@ -10,6 +10,4 @@ class Settings(BaseSettings):
     BOT_TOKEN: str = os.environ.get("BOT_TOKEN")
     DATABASE_URL: Path = Path('storage\coin_flip_bot.db').resolve()
 
-# print(Settings().model_dump())
-
 settings = Settings()

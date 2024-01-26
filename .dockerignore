@@ -1,0 +1,10 @@
+dockerfile
+README.md
+docker-compose.yml
+**/.gitignore
+**/.git
+**/venv
+**/__pycache__
+.dockerignore
+**/user.db
+.env.example

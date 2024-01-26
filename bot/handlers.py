@@ -2,7 +2,7 @@ from loguru import logger
 from telegram import ReplyKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 
-from models import UserDatabase
+from bot.models import UserDatabase
 
 reply_keyboard = [
     ["Flip", "Stats"],

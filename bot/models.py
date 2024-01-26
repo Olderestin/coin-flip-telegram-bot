@@ -2,7 +2,7 @@ import random
 import sqlite3
 from pathlib import Path
 
-from config import settings
+from bot.config import settings
 
 
 class UserDatabase():
@@ -10,7 +10,7 @@ class UserDatabase():
         self.db_path = db_path
 
     def __enter__(self):
-        self.conn = sqlite3.connect(self.db_path)
+        self.conn = sqlite3.connect(self.db_path / "user.db")
         self.cursor = self.conn.cursor()
         return self
     

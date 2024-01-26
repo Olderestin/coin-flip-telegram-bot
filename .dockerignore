@@ -8,3 +8,5 @@ docker-compose.yml
 .dockerignore
 **/user.db
 .env.example
+**/app.log
+**/.gitkeep

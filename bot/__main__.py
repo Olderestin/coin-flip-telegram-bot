@@ -5,7 +5,7 @@ from bot.handlers import start, flip, stats, about
 from bot.config import settings
 from bot.models import UserDatabase
 
-logger.add("app.log", rotation="500 MB", level="TRACE")
+logger.add("storage/app.log", rotation="500 MB", level="TRACE")
 
 def main() -> None:
     

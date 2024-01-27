@@ -2,7 +2,7 @@ from loguru import logger
 from telegram import ReplyKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 
-from bot.models import UserDatabase
+from bot.db import UserDatabase
 
 reply_keyboard = [
     ["Flip", "Stats"],
@@ -12,6 +12,13 @@ reply_keyboard = [
 MARKUP = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=False, resize_keyboard=True)
 
 async def start(update: Update, context: CallbackContext) -> None:
+    """
+    Handles the /start command and initializes a new user.
+
+    param update: The incoming update.
+    param context: The context for the callback.
+    """
+
     user_id = update.effective_user.id
     
     with UserDatabase() as user_db:
@@ -21,6 +28,13 @@ async def start(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text("Привет! Теперь вы можете использовать команды flip и stats.", reply_markup=MARKUP)
 
 async def flip(update: Update, context: CallbackContext) -> None:
+    """
+    Handles the «Flip» command and simulates a coin flip for the user and send the result.
+
+    param update: The incoming update.
+    param context: The context for the callback.
+    """
+
     user_id = update.effective_user.id
     
     with UserDatabase() as user_db:
@@ -30,6 +44,13 @@ async def flip(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text(f'Результат подбрасывания монетки: {result}')
 
 async def stats(update: Update, context: CallbackContext) -> None:
+    """
+    Handles the «Stats» command and displays the user's coin flip statistics.
+
+    param update: The incoming update.
+    param context: The context for the callback.
+    """
+
     user_id = update.effective_user.id
     
     with UserDatabase() as user_db:
@@ -54,6 +75,12 @@ async def stats(update: Update, context: CallbackContext) -> None:
         await update.message.reply_text('Вы еще не подбрасывали монетку. Используйте Flip.')
 
 async def about(update: Update, context: CallbackContext) -> None:
+    """
+    Handles the «About» command and provides information about the bot.
+
+    param update: The incoming update.
+    param context: The context for the callback.
+    """
     
     logger.info(f"User {update.effective_user.id} used «About» handler.")
     await update.message.reply_text('Этот бот был создан в качестве тестового задания.\nОн выполняет функции подбрасывания монеты и запись статистики подбрасываний для каждого отдельного пользователя.')

@@ -3,7 +3,7 @@ from telegram.ext import CommandHandler, ApplicationBuilder, MessageHandler, fil
 
 from bot.handlers import start, flip, stats, about
 from bot.config import settings
-from bot.models import UserDatabase
+from bot.db import UserDatabase
 
 logger.add("storage/app.log", rotation="500 MB", level="TRACE")
 

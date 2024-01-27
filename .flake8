@@ -1,0 +1,13 @@
+[flake8]
+; E266   Too many leading '#' for block comment
+; E501   Line too long (82 > 79 characters)
+; F401   Module imported but unused
+; F403   'from module import *' used; unable to detect undefined names
+; F405   Name may be undefined, or defined from star imports: module
+; W503   Line break occurred before a binary operator
+; E203   Whitespace before ':'
+
+ignore = E266, E501, F405, W503, E203
+max-line-length = 89
+max-complexity = 18
+per-file-ignores = */__init__.py: F401

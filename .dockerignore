@@ -10,3 +10,8 @@ docker-compose.yml
 .env.example
 **/app.log
 **/.gitkeep
+.flake8
+.pylintrc
+poetry.lock
+.pre-commit-config.yaml
+pyproject.toml

@@ -15,67 +15,67 @@ The `Stats` command displays coin toss statistics for each user. The bot tracks 
 ### 3. About
 
 The `About` command displays information about the bot.
-___
-## Launch the bot:
 
-### Through virtual environment
+___
+
+## Prerequisites
+
+- **Required**: Python 3.x
+- **For pip method**: pip
+- **For poetry method**: poetry
+- **For Docker method**: Docker
+___
+## Installation & Usage
 
 1. Clone the repository:
    ```bash
    git clone https://github.com/Olderestin/coin-flip-telegram-bot.git
 
-3. Navigate to the project directory:
+2. Navigate to the project directory:
    ```bash
    cd coin-flip-telegram-bot
-   
-1. Create virtual environment:
-    ```bash
-    python -m venv venv
 
-2. Activate venv:
-    ```bash
-    venv\Scripts\activate
+3. Create a .env file based on the provided example (<font color='red'>**don't forget to insert the token there**</font>):
+   ```bash
+   cp .env.example .env
 
-3. Install pip:
-    ```bash
-    python -m pip install --upgrade pip
+___
 
-4. Install dependencies:
+## Method 1: Using pip
+
+1. Install dependencies:
     ```bash
     pip install -r requirements.txt
 
-5. Create a .env file based on the provided example (<font color='red'>**don't forget to insert the token there**</font>):
-   ```bash
-   cd src
-   cp .env.example .env
-
-6. Run the bot:
+2.  Run the bot:
     ```bash
-    python main.py
+    python -m bot
 
-### Through Docker
+___
 
-1. Clone the repository:
+## Method 2: Using Poetry
+
+1. Install dependencies:
+    ```bash
+    poetry install
+
+2.  Run the bot:
+    ```bash
+    poetry run python -m bot
+
+___
+
+## Method 3: Using Docker
+
+1. Build and run bot with Docker container:
    ```bash
-   git clone https://github.com/Olderestin/coin-flip-telegram-bot.git
-
-3. Navigate to the project directory:
-   ```bash
-   cd coin-flip-telegram-bot/src    
-
-5. Create a .env file based on the provided example (<font color='red'>**don't forget to insert the token there**</font>):
-   ```bash
-   cp .env.example .env
-
-6. Run bot with docker:
-   ```bash
-   cd ..
-   docker compose up
+   docker compose up --build
 
 ___
 ## Note:
 
-- sqlite3 database is used to save usage statistics. Database folder `src/storage` 
+- sqlite3 database is used to save usage statistics. Database folder `bot/storage` 
+- logs foler `bot/storage`
 
 
 

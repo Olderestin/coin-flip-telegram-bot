@@ -2,13 +2,13 @@ from loguru import logger
 from telegram.ext import CommandHandler, ApplicationBuilder, MessageHandler, filters
 
 from bot.handlers import start, flip, stats, about
-from bot.config import settings, USER_BD
+from bot.config import settings, USER_DB
 
 logger.add(settings.LOG_PATH / "app.log", rotation="500 MB", level="TRACE")
 
 def main() -> None:
     
-    with USER_BD as user_db:
+    with USER_DB as user_db:
         user_db.create_user_table()
 
     application = ApplicationBuilder().token(settings.BOT_TOKEN).build()

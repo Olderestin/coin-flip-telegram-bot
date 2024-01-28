@@ -25,4 +25,4 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-USER_BD: UserDatabase = UserDatabase(settings.DATABASE_PATH)
+USER_DB = UserDatabase(settings.DATABASE_PATH)

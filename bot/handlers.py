@@ -2,7 +2,7 @@ from loguru import logger
 from telegram import ReplyKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 
-from bot.config import settings, USER_BD
+from bot.config import settings, USER_DB
 
 reply_keyboard = [
     ["Flip", "Stats"],
@@ -15,13 +15,14 @@ async def start(update: Update, context: CallbackContext) -> None:
     """
     Handles the /start command and initializes a new user.
 
-    param update: The incoming update.
-    param context: The context for the callback.
+    Args:
+        param update: The incoming update.
+        param context: The context for the callback.
     """
 
     user_id = update.effective_user.id
     
-    with USER_BD as user_db:
+    with USER_DB as user_db:
         user_db.add_user(user_id)
 
     logger.info(f"Create a new user, his id: {user_id}")
@@ -31,13 +32,14 @@ async def flip(update: Update, context: CallbackContext) -> None:
     """
     Handles the «Flip» command and simulates a coin flip for the user and send the result.
 
-    param update: The incoming update.
-    param context: The context for the callback.
+    Args:
+        param update: The incoming update.
+        param context: The context for the callback.
     """
 
     user_id = update.effective_user.id
     
-    with USER_BD as user_db:
+    with USER_DB as user_db:
         result = user_db.make_flip(user_id)
 
     logger.info(f"User {user_id} make a flip with result: {result}")
@@ -47,13 +49,14 @@ async def stats(update: Update, context: CallbackContext) -> None:
     """
     Handles the «Stats» command and displays the user's coin flip statistics.
 
-    param update: The incoming update.
-    param context: The context for the callback.
+    Args:
+        param update: The incoming update.
+        param context: The context for the callback.
     """
 
     user_id = update.effective_user.id
     
-    with USER_BD as user_db:
+    with USER_DB as user_db:
         stats = user_db.get_stats(user_id)
 
     if stats[0] > 0:
@@ -78,8 +81,9 @@ async def about(update: Update, context: CallbackContext) -> None:
     """
     Handles the «About» command and provides information about the bot.
 
-    param update: The incoming update.
-    param context: The context for the callback.
+    Args:
+        param update: The incoming update.
+        param context: The context for the callback.
     """
     
     logger.info(f"User {update.effective_user.id} used «About» handler.")

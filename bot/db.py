@@ -3,6 +3,7 @@ import random
 import sqlite3
 from pathlib import Path
 from typing import Tuple
+from typing_extensions import Self
 
 class UserDatabase():
     """
@@ -12,17 +13,19 @@ class UserDatabase():
     def __init__(self, db_path: Path) -> None:
         """
         Initializes the UserDatabase instance.
-
-        param db_path: The path to sqlite3 database file.
-
-        attribute db_path: The path to connect to sqlite3 database.
+        
+        Args:
+            param db_path: The path to sqlite3 database file.
         """
         self.db_path = db_path
         self.conn = sqlite3.connect(self.db_path / "user.db")
 
-    def __enter__(self) -> UserDatabase:
+    def __enter__(self) -> Self:
         """
-        Called when entering a 'with' statement. Connects to the database.
+        Called when entering a 'with' statement. Creates a cursor for database operations.
+
+        Returns:
+            self
         """
 
         self.cursor = self.conn.cursor()
@@ -30,7 +33,7 @@ class UserDatabase():
     
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         """
-        Called when exit a 'with' statement. Commits changes if no exceptions occurred.
+        Called when exit a 'with' statement. Commits changes if no exceptions occurred and closes cursor.
         """
 
         try:
@@ -57,7 +60,8 @@ class UserDatabase():
         """
         Adds a user to the 'user' table if they don't already exist.
 
-        param user_id: The ID of the user to be added.
+        Args:
+            param user_id: The ID of the user to be added.
         """
 
         self.cursor.execute('INSERT OR IGNORE INTO user (user_id) VALUES (?)', (user_id,))
@@ -66,7 +70,11 @@ class UserDatabase():
         """
         Simulates a coin flip, updates user statistics, and returns the result.
         
-        param user_id: The ID of the user making the flip.
+        Args:
+            param user_id: The ID of the user making the flip.
+        Returns:
+            str('heads' or 'tails').
+        
         """
 
         self.cursor.execute('UPDATE user SET flips_count = flips_count + 1 WHERE user_id = ?', (user_id,))
@@ -84,9 +92,10 @@ class UserDatabase():
         """
         Retrieves user statistics from the database and returns it.
         
-        param user_id: The ID of the user.
-        
-        return: tuple (flips_count, heads_count, tails_count).
+        Args:
+            param user_id: The ID of the user.
+        Returns:
+            tuple(flips_count, heads_count, tails_count).
         """
 
         self.cursor.execute('SELECT flips_count, heads_count, tails_count FROM user WHERE user_id = ?', (user_id,))

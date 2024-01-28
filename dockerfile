@@ -8,8 +8,8 @@ COPY requirements.txt /app/temp/requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r /app/temp/requirements.txt
 
-COPY . /app/bot
-WORKDIR /app/bot
+WORKDIR /bot
+COPY . .
 
 
 ENTRYPOINT [ "python", "-m", "bot" ]

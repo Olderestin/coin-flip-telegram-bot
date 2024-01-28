@@ -7,4 +7,4 @@ services:
       context: .
     container_name: telegram_bot
     volumes:
-    - ./storage:/app/bot/storage
+    - ./storage:/bot/storage

@@ -1,31 +1,34 @@
+from __future__ import annotations
 import random
 import sqlite3
 from pathlib import Path
-
-from bot.config import settings
-
+from typing import Tuple
 
 class UserDatabase():
     """
     A class for interacting with a SQLite database to store user statistics.
-
-    param db_path: The path to sqlite3 database file.
-
-    attribute db_path: The path to connect to sqlite3 database.
     """
-    def __init__(self, db_path: Path = settings.DATABASE_URL):
-        self.db_path = db_path
+    
+    def __init__(self, db_path: Path) -> None:
+        """
+        Initializes the UserDatabase instance.
 
-    def __enter__(self):
+        param db_path: The path to sqlite3 database file.
+
+        attribute db_path: The path to connect to sqlite3 database.
+        """
+        self.db_path = db_path
+        self.conn = sqlite3.connect(self.db_path / "user.db")
+
+    def __enter__(self) -> UserDatabase:
         """
         Called when entering a 'with' statement. Connects to the database.
         """
 
-        self.conn = sqlite3.connect(self.db_path / "user.db")
         self.cursor = self.conn.cursor()
         return self
     
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         """
         Called when exit a 'with' statement. Commits changes if no exceptions occurred.
         """
@@ -34,17 +37,11 @@ class UserDatabase():
             if exc_type is None:
                 self.conn.commit()
         finally:
-            self.conn.close()
-            del self.cursor
+            self.cursor.close()
 
-    def create_user_table(self):
+    def create_user_table(self) -> None:
         """
         Creates the 'user' table in the database if it doesn't exist.
-
-        column user_id: Primary key representing the user.
-        column flips_count: Count of coin flips for the user with a default value of 0.
-        column heads_count: Count of 'heads' outcomes for the user with a default value of 0.
-        column tails_count: Count of 'tails' outcomes for the user with a default value of 0.
         """
 
         self.cursor.execute('''
@@ -56,7 +53,7 @@ class UserDatabase():
         )
     ''')
         
-    def add_user(self, user_id: int):
+    def add_user(self, user_id: int) -> None:
         """
         Adds a user to the 'user' table if they don't already exist.
 
@@ -65,7 +62,7 @@ class UserDatabase():
 
         self.cursor.execute('INSERT OR IGNORE INTO user (user_id) VALUES (?)', (user_id,))
 
-    def make_flip(self, user_id: int):
+    def make_flip(self, user_id: int) -> str:
         """
         Simulates a coin flip, updates user statistics, and returns the result.
         
@@ -83,11 +80,13 @@ class UserDatabase():
 
         return result
 
-    def get_stats(self, user_id: int):
+    def get_stats(self, user_id: int) -> Tuple[int, int, int]:
         """
         Retrieves user statistics from the database and returns it.
         
         param user_id: The ID of the user.
+        
+        return: tuple (flips_count, heads_count, tails_count).
         """
 
         self.cursor.execute('SELECT flips_count, heads_count, tails_count FROM user WHERE user_id = ?', (user_id,))

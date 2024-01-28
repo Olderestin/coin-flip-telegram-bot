@@ -2,7 +2,7 @@ from loguru import logger
 from telegram import ReplyKeyboardMarkup, Update
 from telegram.ext import CallbackContext
 
-from bot.db import UserDatabase
+from bot.config import settings, USER_BD
 
 reply_keyboard = [
     ["Flip", "Stats"],
@@ -21,7 +21,7 @@ async def start(update: Update, context: CallbackContext) -> None:
 
     user_id = update.effective_user.id
     
-    with UserDatabase() as user_db:
+    with USER_BD as user_db:
         user_db.add_user(user_id)
 
     logger.info(f"Create a new user, his id: {user_id}")
@@ -37,7 +37,7 @@ async def flip(update: Update, context: CallbackContext) -> None:
 
     user_id = update.effective_user.id
     
-    with UserDatabase() as user_db:
+    with USER_BD as user_db:
         result = user_db.make_flip(user_id)
 
     logger.info(f"User {user_id} make a flip with result: {result}")
@@ -53,7 +53,7 @@ async def stats(update: Update, context: CallbackContext) -> None:
 
     user_id = update.effective_user.id
     
-    with UserDatabase() as user_db:
+    with USER_BD as user_db:
         stats = user_db.get_stats(user_id)
 
     if stats[0] > 0:

@@ -3,5 +3,4 @@ venv
 __pycache__
 *.pyc
 .vscode
-user.db
-app.log
+storage/*

@@ -75,7 +75,7 @@ ___
 ## Note:
 
 - sqlite3 database is used to save usage statistics. Database folder `bot/storage` 
-- logs foler `bot/storage`
+- logs folder `bot/storage`
 
 
 

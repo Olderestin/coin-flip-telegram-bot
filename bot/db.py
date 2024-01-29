@@ -88,7 +88,7 @@ class UserDatabase():
 
         return result
 
-    def get_stats(self, user_id: int) -> Tuple[int, int, int]:
+    def get_stats(self, user_id: int) -> tuple[int, int, int]:
         """
         Retrieves user statistics from the database and returns it.
         

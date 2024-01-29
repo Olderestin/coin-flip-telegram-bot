@@ -2,7 +2,6 @@ from __future__ import annotations
 import random
 import sqlite3
 from pathlib import Path
-from typing import Tuple
 from typing_extensions import Self
 
 class UserDatabase():
@@ -88,7 +87,7 @@ class UserDatabase():
 
         return result
 
-    def get_stats(self, user_id: int) -> Tuple[int, int, int]:
+    def get_stats(self, user_id: int) -> tuple[int, int, int]:
         """
         Retrieves user statistics from the database and returns it.
         

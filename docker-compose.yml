@@ -7,5 +7,4 @@ services:
       context: .
     container_name: telegram_bot
     volumes:
-    - ./src:/src
-    command: sh -c "python main.py"
+    - ./storage:/bot/storage

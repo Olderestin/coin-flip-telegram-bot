@@ -1,0 +1,17 @@
+dockerfile
+README.md
+docker-compose.yml
+**/.gitignore
+**/.git
+**/venv
+**/__pycache__
+.dockerignore
+**/user.db
+.env.example
+**/app.log
+**/.gitkeep
+.flake8
+.pylintrc
+poetry.lock
+.pre-commit-config.yaml
+pyproject.toml

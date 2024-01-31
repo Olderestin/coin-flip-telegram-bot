@@ -1,6 +1,6 @@
 # Test task: Telegram bot for tossing a coin
 
-This bot is built using the `python-telegram-bot` library and provides three commands: `Flip`, `Stats` and `About`. 
+This bot is built using the `python-telegram-bot` library and provides three commands: `Flip`, `Stats` and `About`.
 
 ## Description of commands:
 
@@ -20,10 +20,10 @@ ___
 
 ## Prerequisites
 
-- **Required**: Python 3.x
+- **Required**: Python 3.x, Docker
 - **For pip method**: pip
 - **For poetry method**: poetry
-- **For Docker method**: Docker
+- **For Docker method**: only Docker
 ___
 ## Installation & Usage
 
@@ -35,7 +35,7 @@ ___
    ```bash
    cd coin-flip-telegram-bot
 
-3. Create a .env file based on the provided example (<font color='red'>**don't forget to insert the token there**</font>):
+3. Create a .env file based on the provided example (<font color='red'>**don't forget to fill it**</font>):
    ```bash
    cp .env.example .env
 
@@ -47,7 +47,11 @@ ___
     ```bash
     pip install -r requirements.txt
 
-2.  Run the bot:
+2. Up the database with docker:
+    ```bash
+    docker compose -f docker-compose-local.yml up --build -d
+
+3.  Run the bot:
     ```bash
     python -m bot
 
@@ -59,7 +63,11 @@ ___
     ```bash
     poetry install
 
-2.  Run the bot:
+2. Up the database with docker:
+    ```bash
+    docker compose -f docker-compose-local.yml up --build -d
+
+3.  Run the bot:
     ```bash
     poetry run python -m bot
 
@@ -74,9 +82,5 @@ ___
 ___
 ## Note:
 
-- sqlite3 database is used to save usage statistics. Database folder `bot/storage` 
+- Redis database is used to save usage statistics. Database folder `bot/storage`
 - logs folder `bot/storage`
-
-
-
-

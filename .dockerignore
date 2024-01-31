@@ -15,3 +15,5 @@ docker-compose.yml
 poetry.lock
 .pre-commit-config.yaml
 pyproject.toml
+.mypy_cache
+docker-compose-local.yml

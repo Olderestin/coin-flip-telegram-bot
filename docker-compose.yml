@@ -1,6 +1,16 @@
 version: '3.9'
 
 services:
+  redis:
+    image: redis:7.2.3
+    container_name: redis
+    command: redis-server --appendonly yes
+    hostname: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ./storage:/data
+
   my_project:
     build:
       dockerfile: Dockerfile
@@ -8,3 +18,5 @@ services:
     container_name: telegram_bot
     volumes:
     - ./storage:/bot/storage
+    depends_on:
+      - redis

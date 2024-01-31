@@ -28,7 +28,7 @@ class Settings(BaseSettings):
         case_sensitive = True
 
 
-settings = Settings()
+settings = Settings()  # type: ignore
 
 USER_DB = UserDatabase(
     redis_host=settings.REDIS_HOST,

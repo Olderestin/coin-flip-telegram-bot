@@ -32,14 +32,14 @@ class UserDatabase:
 
         """
 
-        self.redis.hincrby("user:stats", user_id, 1)
+        self.redis.hincrby("user:stats", str(user_id), 1)
 
         result = "heads" if random.randint(0, 1) == 0 else "tails"
 
         if result == "heads":
-            self.redis.hincrby("user:heads", user_id, 1)
+            self.redis.hincrby("user:heads", str(user_id), 1)
         else:
-            self.redis.hincrby("user:tails", user_id, 1)
+            self.redis.hincrby("user:tails", str(user_id), 1)
 
         return result
 
@@ -53,7 +53,7 @@ class UserDatabase:
             tuple(flips_count, heads_count, tails_count).
         """
 
-        flips_count = int(self.redis.hget("user:stats", user_id) or 0)
-        heads_count = int(self.redis.hget("user:heads", user_id) or 0)
-        tails_count = int(self.redis.hget("user:tails", user_id) or 0)
+        flips_count = int(str(self.redis.hget("user:stats", str(user_id))) or 0)
+        heads_count = int(str(self.redis.hget("user:heads", str(user_id))) or 0)
+        tails_count = int(str(self.redis.hget("user:tails", str(user_id))) or 0)
         return flips_count, heads_count, tails_count

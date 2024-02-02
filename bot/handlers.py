@@ -94,3 +94,10 @@ async def about(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text(
         "Этот бот был создан в качестве тестового задания.\nОн выполняет функции подбрасывания монеты и запись статистики подбрасываний для каждого отдельного пользователя."
     )
+
+
+def error_handler(update: Update, context: CallbackContext) -> None:
+    """
+    Log Errors caused by Updates.
+    """
+    logger.error(f"Update {update} caused error {context.error}")

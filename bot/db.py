@@ -53,7 +53,7 @@ class UserDatabase:
             tuple(flips_count, heads_count, tails_count).
         """
 
-        flips_count = int(str(self.redis.hget("user:stats", str(user_id))) or 0)
-        heads_count = int(str(self.redis.hget("user:heads", str(user_id))) or 0)
-        tails_count = int(str(self.redis.hget("user:tails", str(user_id))) or 0)
+        flips_count = int(self.redis.hget("user:stats", str(user_id)) or 0)
+        heads_count = int(self.redis.hget("user:heads", str(user_id)) or 0)
+        tails_count = int(self.redis.hget("user:tails", str(user_id)) or 0)
         return flips_count, heads_count, tails_count

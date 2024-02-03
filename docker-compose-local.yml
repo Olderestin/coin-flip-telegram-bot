@@ -10,13 +10,3 @@ services:
       - 6379:6379
     volumes:
       - ./storage:/data
-
-  my_project:
-    build:
-      dockerfile: Dockerfile
-      context: .
-    container_name: telegram_bot
-    volumes:
-    - ./storage:/bot/storage
-    depends_on:
-      - redis
